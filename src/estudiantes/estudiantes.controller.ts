@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { Estudiantes } from './estudiantes.interface';
+import { EstudiantesService } from './estudiantes.service';
 
 @Controller('estudiantes')
 export class EstudiantesController {
+  constructor(private readonly servicio: EstudiantesService) {}
+
   @Get()
-  ObtenerTodos() {
-    return 'Listado de todos los estudiantes';
+  ObtenerTodos(): Estudiantes[] {
+    return this.servicio.todos();
   }
 
   @Get(':id')
@@ -13,8 +17,8 @@ export class EstudiantesController {
   }
 
   @Post()
-  Crear() {
-    return 'Crear estudiante';
+  Crear(@Body() body: Estudiantes) {
+    return this.servicio.crear(body);
   }
 
   @Put(':id')
