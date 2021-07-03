@@ -24,5 +24,16 @@ export class EstudiantesService {
   }
 
 
+  async update(id:string, estudiante:Estudiantes):Promise<Estudiantes>
+  {
+    return await this.estudianteModel.findByIdAndUpdate(id,estudiante,{new:true});
+  }
+  
+  async delete(id:string):Promise<Estudiantes>
+  {
+    return await this.estudianteModel.findByIdAndRemove(id);
+  }
+
+
 
 }
