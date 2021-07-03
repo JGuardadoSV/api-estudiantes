@@ -1,22 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { Estudiantes } from './estudiantes.interface';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+
+
 
 @Injectable()
 export class EstudiantesService {
-  private baseDedatos: Estudiantes[] = [];
 
-  todos(): Estudiantes[] {
-    return this.baseDedatos;
+  constructor(@InjectModel('Estudiantes') private readonly estudianteModel:Model<Estudiantes>){}
+
+  async todos():Promise<Estudiantes[]> {
+    return await this.estudianteModel.find();
+  }
+ 
+  async uno(id:string):Promise<Estudiantes> {
+    return await this.estudianteModel.findOne({_id:id});
+  }
+ 
+  async crear(estudiante:Estudiantes):Promise<Estudiantes>{
+    const nuevo= new this.estudianteModel(estudiante);
+    return await nuevo.save();
   }
 
-  crear(estudiante: Estudiantes): void {
-    const max = this.baseDedatos.reduce(
-      (op, item) => (op = op > item.Id ? op : item.Id),
-      0,
-    );
 
-    console.log(max);
-    estudiante.Id = max + 1;
-    this.baseDedatos.push(estudiante);
-  }
+
 }

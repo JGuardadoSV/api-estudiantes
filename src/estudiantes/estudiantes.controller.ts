@@ -7,27 +7,12 @@ export class EstudiantesController {
   constructor(private readonly servicio: EstudiantesService) {}
 
   @Get()
-  ObtenerTodos(): Estudiantes[] {
+  ObtenerTodos(): Promise<Estudiantes[]> {
     return this.servicio.todos();
   }
 
-  @Get(':id')
-  ObtenerUno() {
-    return 'Obtener un estudiante';
-  }
-
   @Post()
-  Crear(@Body() body: Estudiantes) {
+  crear(@Body() body: Estudiantes): Promise<Estudiantes> {
     return this.servicio.crear(body);
-  }
-
-  @Put(':id')
-  ActualizarUno() {
-    return 'Actualizar estudiante';
-  }
-
-  @Delete(':id')
-  EliminarUno() {
-    return 'Eliminar estudiante';
   }
 }
