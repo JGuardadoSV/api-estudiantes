@@ -1,6 +1,6 @@
 
 export interface Estudiantes {
-  Id?: number;
+  Id?: string;
   Nombre: string;
   Direccion: string;
   Telefono: number;
